@@ -17,7 +17,7 @@ use App\Repository\BlogRepository;
 use App\Entity\Blog;
 use App\Form\BlogFormType;
 
-class MainController extends AbstractController
+class BlogController extends AbstractController
 {
     /**
      * @Route("/")
@@ -29,7 +29,6 @@ class MainController extends AbstractController
     public function index(BlogRepository $blogRepository)
     {
         $blogs = $blogRepository->findAll();
-        
         return $this->render('blog/list.html.twig', ['blogs'=>$blogs]);
     }
 
@@ -68,7 +67,7 @@ class MainController extends AbstractController
             $entityManager->persist($blog);
             $entityManager->flush();
             $this->addFlash('success', 'Blog was created!');
-            return $this->redirectToRoute('app_main_index');
+            return $this->redirectToRoute('app_blog_index');
         }	
 
         return $this->render('blog/create.html.twig', [
@@ -77,7 +76,7 @@ class MainController extends AbstractController
     }
 
     /**
-     * @Route("/edit/{id}")
+     * @Route("/edit/{id}", name="app_blog_edit")
      *
      * @ParamConverter("blog", class="App:Blog")
      *
@@ -85,7 +84,7 @@ class MainController extends AbstractController
      */
     public function editBlog(Blog $blog, Request $request, EntityManagerInterface $entityManager, SluggerInterface $slugger)
     {
-        if ($blog->getImage()){
+        if ($blog->getImage()) {
             $blog->setImage(new File(sprintf('%s/%s', $this->getParameter('image_directory'), $blog->getImage())));
         }
         $form = $this->createForm(BlogFormType::class, $blog);
@@ -114,7 +113,7 @@ class MainController extends AbstractController
             $entityManager->persist($blog);
             $entityManager->flush();
             $this->addFlash('success', 'Blog was edited!');
-            return $this->redirectToRoute('app_main_index');
+            return $this->redirectToRoute('app_blog_index');
         }
 
         return $this->render('blog/create.html.twig', [
@@ -136,6 +135,18 @@ class MainController extends AbstractController
         $em->flush();
         $this->addFlash('success', 'Blog was edited!');
 
-        return $this->redirectToRoute('app_main_index');
+        return $this->redirectToRoute('app_blog_index');
+    }
+
+    /**
+     * @Route("/show/{id}", name="app_blog_show")
+     *
+     * @param Blog                   $blog
+     */
+    public function showBlog(Blog $blog)
+    {
+        return $this->render('blog/show.html.twig', [
+            'blog' => $blog
+        ]);
     }
 }

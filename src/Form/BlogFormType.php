@@ -3,8 +3,10 @@
 namespace App\Form;
 
 use App\Entity\Blog;
+use App\Entity\Category;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 
@@ -20,6 +22,9 @@ class BlogFormType extends AbstractType
             ->add('imageFile', FileType::class, [
                 'mapped' => false,
                 'required' => false,
+            ])
+            ->add('category', EntityType::class, [
+                'class' => Category::class
             ]);
     }
 

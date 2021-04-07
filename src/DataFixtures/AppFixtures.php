@@ -2,9 +2,11 @@
 
 namespace App\DataFixtures;
 
-use Doctrine\Bundle\FixturesBundle\Fixture;
-use Doctrine\Persistence\ObjectManager;
 use App\Entity\Blog;
+use App\Entity\User;
+use App\Entity\Category;
+use Doctrine\Persistence\ObjectManager;
+use Doctrine\Bundle\FixturesBundle\Fixture;
 
 class AppFixtures extends Fixture
 {
@@ -12,7 +14,13 @@ class AppFixtures extends Fixture
     {
         // $product = new Product();
         // $manager->persist($product);
-
+        $user = new User();
+        $user->setUsername("caca");
+        $user->setPassword("caca");
+        $cat = new Category();
+        $cat->setName("pipi");
+        $manager->persist($user);
+        $manager->persist($cat);
         for ($i = 0; $i < 4; ++$i) {
             $blog = new Blog();
             $blog->setTitle('Lorem ipsum');
@@ -23,6 +31,9 @@ class AppFixtures extends Fixture
               Pellentesque sit amet lacus in metus placerat posuere. Aliquam hendrerit risus elit, non commodo nulla cursus id. 
               Vivamus tristique felis leo, vitae laoreet sapien eleifend vitae. Etiam varius sollicitudin tincidunt');
             $blog->setShortDescription('Lorem ipsum description');
+            $blog->setUser($user);
+            $blog->setCategory($cat); 
+           
             $manager->persist($blog);
         }
         $manager->flush();
