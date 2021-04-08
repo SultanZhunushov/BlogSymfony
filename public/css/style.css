@@ -1,0 +1,11 @@
+.imgage {
+    background-repeat: no-repeat;
+    transition: transform .2s;
+    background-position: center;
+    width: auto;
+    height: auto;
+}
+
+.imgage:hover {
+    transform: scale(1.5);
+}

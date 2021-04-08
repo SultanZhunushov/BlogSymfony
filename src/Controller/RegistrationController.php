@@ -6,6 +6,7 @@ use App\Entity\User;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\String\Slugger\SluggerInterface;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
@@ -18,7 +19,7 @@ class RegistrationController extends AbstractController
     /**
      * @Route("/register", name="register")
      */
-    public function index(Request $request, UserPasswordEncoderInterface $passwordEncoder): Response
+    public function index(Request $request, UserPasswordEncoderInterface $passwordEncoder, SluggerInterface $slugger): Response
     {
         $form = $this->createFormBuilder()
                 ->add('username')
@@ -43,14 +44,20 @@ class RegistrationController extends AbstractController
         if($form->isSubmitted()) {
             $data = $form->getData();
             $user = new User();
-            $file = $request->files->get('form')['attachment'];
-            if ($file) {
-                $filename = md5(uniqid()) . '.' . $file->guessClientExtension();
-                $file->move(
-                    $this->getParameter('image_directory'),
-                    $filename
-                );
-                $user->setImage($filename);
+            $imageFile = $form->get('attachment')->getData();
+            if ($imageFile) {
+                $originalFilename = pathinfo($imageFile->getClientOriginalName(), PATHINFO_FILENAME);
+                $safeFilename = $slugger->slug($originalFilename);
+                $newFilename = $safeFilename.'-'.uniqid().'.'.$imageFile->guessExtension();
+                try {
+                    $imageFile->move(
+                        $this->getParameter('image_directory'),
+                        $newFilename
+                    );
+                } catch (FileException $e) {
+                    $this->addFlash('error', 'Image cannot be saved.');
+                }
+                $user->setImage($newFilename);
             }
             $user->setUsername($data['username']);
             $user->setPassword($passwordEncoder->encodePassword($user, $data['password']));

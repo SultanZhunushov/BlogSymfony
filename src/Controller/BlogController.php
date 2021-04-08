@@ -2,20 +2,19 @@
 
 namespace App\Controller;
 
-use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\HttpFoundation\Response;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\String\Slugger\SluggerInterface;
-use Doctrine\ORM\EntityManagerInterface;
-use Symfony\Component\HttpFoundation\File\File;
-use Symfony\Component\HttpFoundation\File\Exception\FileException;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
-use Symfony\Component\HttpFoundation\RedirectResponse;
-
-use App\Repository\BlogRepository;
 use App\Entity\Blog;
 use App\Form\BlogFormType;
+use App\Repository\BlogRepository;
+use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\File\File;
+use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\String\Slugger\SluggerInterface;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\File\Exception\FileException;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 
 class BlogController extends AbstractController
 {
@@ -29,7 +28,7 @@ class BlogController extends AbstractController
     public function index(BlogRepository $blogRepository)
     {
         $blogs = $blogRepository->findAll();
-        return $this->render('blog/list.html.twig', ['blogs'=>$blogs]);
+        return $this->render('blog/list.html.twig', ['blogs'=>$blogs, 'user'=>$this->getUser()]);
     }
 
      /**
@@ -61,6 +60,7 @@ class BlogController extends AbstractController
                 } catch (FileException $e) {
                     $this->addFlash('error', 'Image cannot be saved.');
                 }
+                $blog->setUser($this->getUser());
                 $blog->setImage($newFilename);
             }
 
@@ -71,7 +71,8 @@ class BlogController extends AbstractController
         }	
 
         return $this->render('blog/create.html.twig', [
-            'form' => $form->createView()
+            'form' => $form->createView(), 
+            'user'=>$this->getUser()
         ]);
     }
 
@@ -118,6 +119,7 @@ class BlogController extends AbstractController
 
         return $this->render('blog/create.html.twig', [
             'form' => $form->createView(),
+            'user'=>$this->getUser()
         ]);
     }
 
@@ -146,7 +148,8 @@ class BlogController extends AbstractController
     public function showBlog(Blog $blog)
     {
         return $this->render('blog/show.html.twig', [
-            'blog' => $blog
+            'blog' => $blog, 
+            'user'=>$this->getUser()
         ]);
     }
 }

@@ -63,7 +63,6 @@ class User implements UserInterface
      */
     public function getRoles(): array
     {
-        $roles = $this->roles;
         // guarantee every user at least has ROLE_USER
         $roles[] = 'ROLE_USER';
 
@@ -160,6 +159,7 @@ class User implements UserInterface
     public function removeBlog(Blog $blog): self
     {
         if ($this->blog->removeElement($blog)) {
+            $this->blog->removeElement($blog);
             // set the owning side to null (unless already changed)
             if ($blog->getUser() === $this) {
                 $blog->setUser(null);
@@ -167,5 +167,9 @@ class User implements UserInterface
         }
 
         return $this;
+    }
+
+    public function __toString() {
+        return $this->username;
     }
 }

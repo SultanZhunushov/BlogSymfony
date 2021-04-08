@@ -60,28 +60,6 @@ class Category
         return $this->blog;
     }
 
-    public function addPost(Blog $blog): self
-    {
-        if (!$this->blog->contains($blog)) {
-            $this->blog[] = $blog;
-            $blog->setCategory($this);
-        }
-
-        return $this;
-    }
-
-    public function removePost(Blog $blog): self
-    {
-        if ($this->blog->removeElement($blog)) {
-            // set the owning side to null (unless already changed)
-            if ($blog->getCategory() === $this) {
-                $blog->setCategory(null);
-            }
-        }
-
-        return $this;
-    }
-
     public function addBlog(Blog $blog): self
     {
         if (!$this->blog->contains($blog)) {
@@ -95,6 +73,7 @@ class Category
     public function removeBlog(Blog $blog): self
     {
         if ($this->blog->removeElement($blog)) {
+            $this->blog->removeElement($blog);
             // set the owning side to null (unless already changed)
             if ($blog->getCategory() === $this) {
                 $blog->setCategory(null);
@@ -102,5 +81,10 @@ class Category
         }
 
         return $this;
+    }
+
+    public function __toString() 
+    {
+        return $this->name;
     }
 }
