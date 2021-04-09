@@ -13,13 +13,17 @@ use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
+use App\Security\AppCustomAuthenticator;
+use Symfony\Component\Security\Guard\GuardAuthenticatorHandler;
 
 class RegistrationController extends AbstractController
 {
     /**
      * @Route("/register", name="register")
      */
-    public function index(Request $request, UserPasswordEncoderInterface $passwordEncoder, SluggerInterface $slugger): Response
+    public function index(AppCustomAuthenticator $authenticator, GuardAuthenticatorHandler $guardHandler,
+                            Request $request, UserPasswordEncoderInterface $passwordEncoder, 
+                            SluggerInterface $slugger)
     {
         $form = $this->createFormBuilder()
                 ->add('username')
@@ -64,10 +68,25 @@ class RegistrationController extends AbstractController
             $em = $this->getDoctrine()->getManager();
             $em->persist($user);
             $em->flush();
-            return $this->redirect($this->generateUrl('app_blog_index'));
+            return $guardHandler->authenticateUserAndHandleSuccess(
+                $user,        
+                $request,
+                $authenticator,
+                'main'      
+            );
         }
         return $this->render('registration/index.html.twig', [
-            'form' => $form->createView()
+            'form' => $form->createView(), 
+            'user'=>$this->getUser()
         ]);
+    }
+    public function register(LoginFormAuthenticator $authenticator, GuardAuthenticatorHandler $guardHandler, Request $request)
+    {
+        return $guardHandler->authenticateUserAndHandleSuccess(
+            $user,          // the User object you just created
+            $request,
+            $authenticator, // authenticator whose onAuthenticationSuccess you want to use
+            'main'          // the name of your firewall in security.yaml
+        );
     }
 }

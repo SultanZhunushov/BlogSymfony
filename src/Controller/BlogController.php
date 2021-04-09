@@ -51,7 +51,6 @@ class BlogController extends AbstractController
                 $originalFilename = pathinfo($imageFile->getClientOriginalName(), PATHINFO_FILENAME);
                 $safeFilename = $slugger->slug($originalFilename);
                 $newFilename = $safeFilename.'-'.uniqid().'.'.$imageFile->guessExtension();
-
                 try {
                     $imageFile->move(
                         $this->getParameter('image_directory'),
@@ -63,13 +62,11 @@ class BlogController extends AbstractController
                 $blog->setUser($this->getUser());
                 $blog->setImage($newFilename);
             }
-
             $entityManager->persist($blog);
             $entityManager->flush();
             $this->addFlash('success', 'Blog was created!');
             return $this->redirectToRoute('app_blog_index');
-        }	
-
+        }
         return $this->render('blog/create.html.twig', [
             'form' => $form->createView(), 
             'user'=>$this->getUser()
@@ -108,6 +105,7 @@ class BlogController extends AbstractController
                 } catch (FileException $e) {
                     $this->addFlash('error', 'Image cannot be saved.');
                 }
+                $this->addFlash('success', 'Blog was created!');
                 $blog->setImage($newFilename);
             }
 
@@ -135,8 +133,6 @@ class BlogController extends AbstractController
     {
         $em->remove($blog);
         $em->flush();
-        $this->addFlash('success', 'Blog was edited!');
-
         return $this->redirectToRoute('app_blog_index');
     }
 
@@ -145,11 +141,9 @@ class BlogController extends AbstractController
      *
      * @param Blog                   $blog
      */
-    public function showBlog(Blog $blog)
+    public function showBlog(BlogRepository $blogRepository)
     {
-        return $this->render('blog/show.html.twig', [
-            'blog' => $blog, 
-            'user'=>$this->getUser()
-        ]);
+        $blogs = $blogRepository->findAll();
+        return $this->render('blog/show.html.twig', ['blogs'=>$blogs, 'user'=>$this->getUser()]);
     }
 }
