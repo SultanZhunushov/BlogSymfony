@@ -3,11 +3,11 @@
 {% block title %}Login{% endblock %}
 
 {% block body %}
-<form method="post">
+<form method="post" class="was-validated">
     <div class="container position-absolute top-50 start-50 translate-middle">
-        <div class="row justify-content-md-center">
-            <div class="col col-lg-3 shadow-lg rounded">
-                <h1 class="h2 my-3 fw-normal text-center">BloBlo</h1>
+        <div class="row justify-content-md-center form-signin">
+            <div class="col col-lg-4 shadow-lg rounded">
+                <a href="/" class="link-dark"><h1 class="h2 my-3 fw-normal text-center">Blog Symfony</h1></a>
 
                 <div class="form-group my-3">
                     <label for="inputUsername">Username</label>
@@ -19,7 +19,7 @@
                 </div>
                 <div class="checkbox mb-3">
                     <label>
-                        <input type="checkbox" name="_remember_me"> Ricardami
+                        <input type="checkbox" name="_remember_me"> Ricordami
                     </label>
                 </div>
                 <div class="form-floating">

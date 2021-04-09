@@ -1,5 +1,11 @@
 {% extends 'base.html.twig' %}
 
+{% block stylesheets %}
+
+<link href="css/style.css" rel="stylesheet">
+
+{% endblock %}
+
 {% block body %}
     {% include "header.html.twig" with {'user': user} %}
     <div class="container">
@@ -9,12 +15,12 @@
                     <h2 class="pb-2 border-bottom">All Blogs</h2>
                     <div class="row row-cols-3 align-items-stretch py-5">
                         {% for blog in blogs %}
-                            <a class="clearfix" href="/show/{{ blog.id }}">
+                            <a class="clearfix cardu cardu-1" href="/show/{{ blog.id }}">
                                 <div class="col">
-                                    {% if blog.getImage is null %}
-                                        <div class="card card-cover h-100 overflow-hidden text-white bg-dark rounded-5 shadow-lg" style="background-image: url('img/eren.jpg');">
+                                    {% if blog.getImage is not null %}
+                                        <div class="card card-cover h-100 overflow-hidden text-white bg-dark rounded-5 shadow-lg" style="background-image: url('{{ asset("uploads/"~blog.image) }}');">
                                     {% else %}
-                                        <div class="card card-cover h-100 overflow-hidden text-white bg-dark rounded-5 shadow-lg imgage" style="background-image: url('img/no_img.jpg');">
+                                        <div class="card card-cover h-100 overflow-hidden text-white bg-dark rounded-5 shadow-lg imgage" style="background-image: url(img/no_img.jpg'');">
                                     {% endif %}
                                         <div class="d-flex flex-column h-100 p-5 pb-3 text-white text-shadow-1">
                                             <h2 class="pt-5 mt-5 mb-4 display-6 lh-1 fw-bold">{{ blog.getShortDescription() }}</h2>
@@ -29,7 +35,7 @@
                                                     </svg>
                                                     <small>{{ blog.title }}</small>
                                                 </li>
-                                                {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+                                                {% if is_granted('IS_AUTHENTICATED_FULLY') and user == blog.user  %}
                                                     <li class="d-flex p-1 align-items-center">
                                                         <button onclick='window.location.href="{{ path('app_blog_edit', {id: blog.id}) }}"' type="button"  class="btn btn-dark">
                                                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">

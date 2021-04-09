@@ -25,14 +25,13 @@ class BlogFormType extends AbstractType
             ->add('body', TextareaType::class)
             ->add('imageFile', FileType::class, ['mapped' => false, 'required' => false])
             ->add('category', EntityType::class, ['class' => Category::class])
-            ->add('user', EntityType::class, ['class' => User::class])
             ->add('invia', SubmitType::class);
     }
 
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'was-validated' => Blog::class,
+            'data_class' => Blog::class,
         ]);
     }
 }

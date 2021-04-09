@@ -5,31 +5,21 @@
     <div class="container">
         <div class="row justify-content-md-center form-signin">
             <div class="col col-lg-10 shadow-lg rounded">
-                {{ form_start(form, {'attr': {'class': 'was-validated'}}) }}
+                {{ form_start(form, {'attr': {'class': 'needs-validation', 'novalidate': true}}) }}
 
                 <div class="form-floating mb-3">
                     {{ form_row(form.title, {'attr': {'class': 'form-control'}}) }}
                 </div>
                 <div class="form-floating mb-3">
-                    {{ form_row(form.shortDescription, {'attr': {
-                                                                'class': 'form-control is-invalid', 
+                    {{ form_row(form.shortDescription, {'attr': {'class': 'form-control', 
                                                                 'placeholder': 'Required example textarea',
-                                                                'rows': 2
-                                                                }
-                    }) }}
+                                                                'rows': 2 }}) }}
                 </div>
                 <div class="form-floating mb-3">
                     {{ form_row(form.body, {'attr': {
-                                                    'class': 'form-control ',
+                                                    'class': 'form-control',
                                                     'placeholder': 'Required example textarea',
                                                     'rows': 10
-                                                    }
-                    }) }}
-                </div>
-                <div class="form-floating mb-3">
-                    {{ form_row(form.user, {'attr': {
-                                                        'class': 'form-select',
-                                                        'required aria-label': 'select example'
                                                     }
                     }) }}
                 </div>
@@ -41,8 +31,7 @@
                     }) }}
                 </div>
                 <div class="form-floating form-group mb-3">
-                    {{ form_row(form.imageFile, {'attr': {'class': 'form-control'}
-                    }) }}
+                    {{ form_row(form.imageFile, {'attr': {'class': 'form-control'}}) }}
                 </div>
                 <div class="form-floating mb-3">
                     {{ form_row(form.invia, {'attr': {'class': 'btn btn-dark justify-content-md-end'}}) }}

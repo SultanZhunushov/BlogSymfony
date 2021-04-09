@@ -1,0 +1,36 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Registrazione{% endblock %}
+
+{% block body %}
+    <div class="container position-absolute top-50 start-50 translate-middle">
+        <div class="row justify-content-md-center form-signin">
+            <div class="col col-lg-4 shadow-lg rounded">
+                <a href="/" class="link-dark"><h1 class="h2 my-3 fw-normal text-center">Blog Symfony</h1></a>
+                {{ form_start(registrationForm, {'attr': {'class': 'was-validated'}}) }}
+
+                <div class="form-floating mb-3">
+                    {{ form_row(registrationForm.username, {'attr': {'class': 'form-control'}}) }}
+                </div>
+                <div class="form-floating mb-3">
+                    {{ form_row(registrationForm.password) }}
+                </div>
+                <div class="form-floating form-group mb-3">
+                    {{ form_row(registrationForm.imageFile, {'attr': {'class': 'form-control'}}) }}
+                </div>
+                <div class="checkbox mb-3">
+                    <label>
+                        <input type="checkbox" name="_remember_me"> Ricordami
+                    </label>
+                </div>
+                <div class="form-floating mb-3">
+                    {{ form_row(registrationForm.register, {'attr': {'class': 'btn btn-dark text-center position-relative top-0 start-50 translate-middle'}}) }}
+                </div>
+                <div class="form-floating mb-3 text-center">
+                    Sei già registrato? <a href="/login">Entra</a>
+                </div>
+                {{ form_end(registrationForm) }}
+            </div>
+        </div>
+    </div>
+{% endblock %}
