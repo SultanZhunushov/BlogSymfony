@@ -1,4 +1,4 @@
-<header class="p-3 bg-dark mb-3 text-white">
+<header class="p-3 bg-dark text-white">
     <div class="container">
         <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
             <a href="/" class="d-flex align-items-center mb-2 mb-lg-0 text-secondary text-decoration-none">
@@ -12,6 +12,7 @@
             <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
             </ul>
 
+            {# TODO Search bar #}
             <form class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3">
                 <input type="search" class="form-control bg-dark text-white" placeholder="Search...">
             </form>
@@ -28,7 +29,7 @@
                         {% endif %}
                     {% endif %}
                 </a>
-
+                
                 <ul class="dropdown-menu dropdown-menu-dark text-small" aria-labelledby="dropdownUser1" style="">
                     {% if is_granted('IS_AUTHENTICATED_FULLY') %}
                         <li><a class="dropdown-item" href="/create">Nuovo blog</a></li>

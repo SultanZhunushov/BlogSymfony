@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Blog;
 use App\Form\BlogFormType;
 use App\Repository\BlogRepository;
+use App\Repository\CategoryRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -25,10 +26,11 @@ class BlogController extends AbstractController
      *
      * @return Response
      */
-    public function index(BlogRepository $blogRepository)
+    public function index(BlogRepository $blogRepository, CategoryRepository $categoryRepository)
     {
         $blogs = $blogRepository->findAll();
-        return $this->render('blog/list.html.twig', ['blogs'=>$blogs, 'user'=>$this->getUser()]);
+        $categories= $categoryRepository->findAll();
+        return $this->render('blog/list.html.twig', ['blogs'=>$blogs, 'user'=>$this->getUser(), 'categories'=>$categories]);
     }
 
      /**
@@ -140,12 +142,12 @@ class BlogController extends AbstractController
 
     /**
      * @Route("/show/{id}", name="app_blog_show")
-     *
-     * @param Blog                   $blog
+     * 
+     * @param Blog $blog
+     * @return Response
      */
-    public function showBlog(BlogRepository $blogRepository)
+    public function showBlog(Blog $blog)
     {
-        $blogs = $blogRepository->findAll();
-        return $this->render('blog/show.html.twig', ['blogs'=>$blogs, 'user'=>$this->getUser()]);
+        return $this->render('blog/show.html.twig', ['blog' => $blog, 'user'=>$this->getUser()]);
     }
 }

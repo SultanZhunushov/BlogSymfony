@@ -1,1 +1,2 @@
 # BlogSymfony
+commands: composer update

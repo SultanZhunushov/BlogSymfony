@@ -1,12 +1,69 @@
 {% extends 'base.html.twig' %}
 
+{% block stylesheets %}
+    {# https://codepen.io/Roemerdt/pen/epKjdM #}
+    <link href="../css/blog.css" rel="stylesheet">
+{% endblock %}
+
 {% block body %}
-
-    <div class=''>
+    {% include "header.html.twig" with {'user': user} %}
+    <main>
+        <div class="jumbo" style="background: url('{{ asset("uploads/"~blog.getImage()) }}')"></div>
+        <div class="container icons">
+            <div class="big-icon rounded-circle" style="background: url('{{ asset("uploads/"~blog.user.image) }}')"></div>
+            <div class="rate">
+                <a class="star-btn add-btn btn-floating btn-large waves-effect waves-light blue darken-1">
+                    {% if is_granted('IS_AUTHENTICATED_FULLY') and user == blog.user  %}
+                        <li class="d-flex p-1 align-items-center">
+                            <button onclick='window.location.href="{{ path('app_blog_edit', {id: blog.id}) }}"' type="button"  class="btn btn-dark">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
+                                    <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"></path>
+                                    <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z"></path>
+                                </svg>
+                                <span class="visually-hidden">Edit</span>
+                            </button>
+                        </li>
+                    {% endif %}
+                </a>
+                <a class="like-btn add-btn btn-floating btn-large waves-effect waves-light blue darken-1">
+                    {% if is_granted('IS_AUTHENTICATED_FULLY') and user == blog.user  %}
+                        <li class="d-flex p-1 align-items-center">
+                            <button onclick='window.location.href="{{ path('app_blog_delete', {id: blog.id}) }}"' type="button" class="btn btn-dark">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">
+                                    <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z"></path>
+                                    <path fill-rule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z"></path>
+                                </svg>
+                                <span class="visually-hidden">Delete</span>
+                            </button>
+                        </li>
+                    {% endif %}
+                </a>
+            </div>
+            <div class="add">
+                <a class="add-btn btn-floating btn-large waves-effect waves-light red"></a>
+            </div>
+        </div>
+        <div class="details">
+            <h3>{{ blog.getTitle() }}</h3>
+            <p>{{ blog.getShortDescription() }}</p>
+            <small>Category: {{ blog.getCategory() }}</small>
+        </div>
+        <div class="container bio">
+            <div class="title">
+                <h6>Biography</h6>
+            </div>
+            <div class="content">
+                <p>{{ blog.getBody() }}</p>
+            </div>
+            <hr />
+        </div>
+    </main>
     
-    </div>
-        <div class="msg">
-        Scroll down me plz :)
-    </div>
-
+    {#<img src="{{ asset("uploads/"~blog.user.image) }}" alt="user_image" width="32" height="32" class="rounded-circle border border-white">#}
+    
+    {% block javascripts %}
+        <script type="text/javascript" src="../js/script.js"></script>
+        <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+        <script script script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.1/js/materialize.min.js"></script>
+    {% endblock %} 
 {% endblock %}

@@ -21,14 +21,14 @@ class Blog
     /**
      * @ORM\Column(type="string", length=40)
      * @Assert\NotBlank(message="Il titolo non può essere vuoto")
-     * @Assert\Length(min=5,max=20)
+     * @Assert\Length(max=20)
      */
     private $title;
 
     /**
      * @ORM\Column(type="string", length=100)
      * @Assert\NotBlank(message="La descrizione breve non può essere vuota")
-     * @Assert\Length(max=50)
+     * @Assert\Length(max=100)
      */
     private $short_description;
 
