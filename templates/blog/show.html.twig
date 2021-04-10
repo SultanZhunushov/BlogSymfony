@@ -9,7 +9,7 @@
     {% include "header.html.twig" with {'user': user} %}
     <main>
         <div class="jumbo" style="background: url('{{ asset("uploads/"~blog.getImage()) }}')"></div>
-        <div class="container icons">
+        <div class="container">
             <div class="big-icon rounded-circle" style="background: url('{{ asset("uploads/"~blog.user.image) }}')"></div>
             <div class="rate">
                 <a class="star-btn add-btn btn-floating btn-large waves-effect waves-light blue darken-1">

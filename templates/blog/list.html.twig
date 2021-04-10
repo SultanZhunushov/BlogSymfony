@@ -9,17 +9,17 @@
     {% include "header.html.twig" with {'user': user} %}
     <div class="wrapper">
         <h2><strong>Tutte categorie<span>( {{ categories|length }} )</span></strong></h2>
-        <div class="row">
+        <div class="clearfix d-flex align-items-start">
+            <div class="row">
             {% for category in categories %}
-                <div class="col">
-                    <div class="cards">
-                        <figure class="card">
-                            <img src="https://mrreiha.keybase.pub/codepen/hover-fx/1.jpg" />
-                            <figcaption>{{ category.getName() }}</figcaption>
-                        </figure>
-                    </div>
+                <div class="cards col">
+                    <figure class="card">
+                        <img src="{{ asset("uploads/"~category.getImage()) }}" />
+                        <figcaption>{{ category.getName() }}</figcaption>
+                    </figure>
                 </div>
             {% endfor %}
+            </div>
         </div>
         <h2><strong>Tutti blog<span>( {{ blogs|length }} )</span></strong></h2>
 
@@ -31,6 +31,7 @@
                         <figcaption>
                             <h3>{{ blog.getTitle() }}</h3>
                             <p>{{ blog.getShortDescription() }}</p>
+                            <small>{{ blog.getCategory() }}</small>
                         </figcaption>
                     </figure>
                 </a>

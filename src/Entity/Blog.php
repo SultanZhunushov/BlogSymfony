@@ -21,7 +21,7 @@ class Blog
     /**
      * @ORM\Column(type="string", length=40)
      * @Assert\NotBlank(message="Il titolo non può essere vuoto")
-     * @Assert\Length(max=20)
+     * @Assert\Length(max=40)
      */
     private $title;
 
