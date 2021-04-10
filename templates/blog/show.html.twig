@@ -1,5 +1,6 @@
 {% extends 'base.html.twig' %}
 
+{% block title %}Blog{% endblock %}
 {% block stylesheets %}
     {# https://codepen.io/Roemerdt/pen/epKjdM #}
     <link href="../css/blog.css" rel="stylesheet">
@@ -8,9 +9,9 @@
 {% block body %}
     {% include "header.html.twig" with {'user': user} %}
     <main>
-        <div class="jumbo" style="background: url('{{ asset("uploads/"~blog.getImage()) }}')"></div>
-        <div class="container">
-            <div class="big-icon rounded-circle" style="background: url('{{ asset("uploads/"~blog.user.image) }}')"></div>
+        <div class="jumbo" style="background: url('{{ asset("uploads/"~blog.getImage()) }}');"></div>
+        <div class="container icons">
+            <div class="big-icon rounded-circle mx-auto d-block" style="background: url('{{ asset("uploads/"~blog.user.image) }}'); background-position: center center; background-size: cover;"></div>
             <div class="rate">
                 <a class="star-btn add-btn btn-floating btn-large waves-effect waves-light blue darken-1">
                     {% if is_granted('IS_AUTHENTICATED_FULLY') and user == blog.user  %}

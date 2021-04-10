@@ -61,9 +61,9 @@ class BlogController extends AbstractController
                 } catch (FileException $e) {
                     $this->addFlash('error', 'Image cannot be saved.');
                 }
-                $blog->setUser($this->getUser());
                 $blog->setImage($newFilename);
             }
+            $blog->setUser($this->getUser());
             $entityManager->persist($blog);
             $entityManager->flush();
             $this->addFlash('success', 'Blog was created!');

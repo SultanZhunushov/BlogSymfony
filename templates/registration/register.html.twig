@@ -3,10 +3,11 @@
 {% block title %}Registrazione{% endblock %}
 
 {% block body %}
+    {% include "header.html.twig" %}
     <div class="container position-absolute top-50 start-50 translate-middle">
         <div class="row justify-content-md-center form-signin">
             <div class="col col-lg-4 shadow-lg rounded">
-                <a href="/" class="link-dark"><h1 class="h2 my-3 fw-normal text-center">Blog Symfony</h1></a>
+                <h1 class="h2 my-3 fw-normal text-center">Blog Symfony</h1>
                 {{ form_start(registrationForm, {'attr': {'class': 'was-validated'}}) }}
 
                 <div class="form-floating mb-3">
