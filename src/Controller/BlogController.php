@@ -42,6 +42,7 @@ class BlogController extends AbstractController
      */
     public function createBlog(Request $request, EntityManagerInterface $entityManager, SluggerInterface $slugger)
     {
+        $this->denyAccessUnlessGranted('ROLE_USER');
         $blog = new Blog();
         $form = $this->createForm(BlogFormType::class, $blog);
 
