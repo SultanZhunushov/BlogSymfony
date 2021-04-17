@@ -22,12 +22,12 @@
             {% endfor %}
             </div>
         </div>
-        <h2><strong>Tutti blog<span>( {{ blogs|length }} )</span></strong></h2>
 
-        <div class="news">
+        <h2><strong>Tutti blog<span>( {{ blogs|length }} )</span></strong></h2>
+        <div id="div" class="news">
             {% for blog in blogs %}
                 <a href="{{ path('app_blog_show', {id: blog.id}) }}">
-                    <figure class="article">
+                    <figure name="film" class="article">
                         <img src="{{ asset("uploads/"~blog.getImage()) }}" />
                         <figcaption>
                             <h3>{{ blog.getTitle() }}</h3>
